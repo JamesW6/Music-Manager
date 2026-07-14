@@ -3,7 +3,12 @@
 web_scrape(){
   python -c 'from sys import argv; from web_scraper import scrape; scrape(argv[1], argv[2])' "$@"
 }
-
+update_directory(){
+  echo " asd"
+}
+update_account(){
+  echo " asd"
+}
 config="$HOME/.config/music_mover.txt"
 if ! [ -f "$config" ] || ! grep "directory" $config ; then
   echo "enter the name of the directory you want to store your music"
@@ -22,14 +27,15 @@ export param="$url"
 pip install -r requirements.txt
 playlists=$(web_scrape "$url" "$config")
 
-echo "which playlist would you like to download: "
 declare -a playlists_array
 read -r -a playlists_array <<< "$playlists"
 
 i=0
 declare -a playlists_link_array
+declare -a playlists_name_array
 for playlist in "${playlists_array[@]}"; do 
   if ((i%2==0)); then
+    playlists_name_array+=($playlist)
     index=$(($i/2+1))
     echo $index: "$playlist"
   else
@@ -38,11 +44,16 @@ for playlist in "${playlists_array[@]}"; do
   ((i++))
 done
 
-read -r input
-input=$(($input-1))
-download_directory=$(grep "directory" "$config" | sed 's/directory: //')
-echo ${playlists_link_array[@]}
-yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -P "$download_directory" "${playlists_link_array[$input]}" 
-
+while true; do
+  echo "which playlist would you like to download: "
+  read -r input
+  input=$(($input-1))
+  download_directory=$(grep "directory" "$config" | sed 's/directory: //')
+  download_directory+="/"
+  download_directory+=${playlists_name_array[$input]}
+  mkdir $download_directory
+  echo ${playlists_link_array[@]}
+  yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -P "$download_directory" "${playlists_link_array[$input]}" 
+done
 
 
