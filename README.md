@@ -10,3 +10,6 @@ A CLI to download your soundcloud playlists, without going through the troubles 
 
 ## Usage
 Once you have entered your soundcloud username url once, you never have to paste another link. Just ensure playlists are public and select the one you want to download to your directory
+
+## Disclaimer
+This script uses a web scraper well below a rate that would be flagged, but use at your own risk
