@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 scrape_soundcloud(){
-  python sc_scrape.py $1
+  python $SCRIPT_DIR/sc_scrape.py $1
 }
 scrape_youtube(){
-  python yt_scrape.py $1
+  python $SCRIPT_DIR/yt_scrape.py $1
 }
 update_directory(){
   echo "enter the name of the directory you want to store your music"
@@ -19,14 +19,16 @@ update_account(){
   echo "$1: $account_url" >> "$config"
 }
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 config="$HOME/.config/music_mover.txt"
+
+
 echo "Change download directory? (y/n)"
 read -r change
 if ! [ -f "$config" ] || ! grep "directory" $config || [[ $change == "y" ]]; then
   update_directory
 fi
-
-pip install -r requirements.txt
+pip install -r "$SCRIPT_DIR/requirements.txt"
 platform=""
 while  [[ "$platform" != "s" ]] && [[ "$platform" != "y" ]]; do
   echo "downloading from (y)outube or (s)oundcloud?"
