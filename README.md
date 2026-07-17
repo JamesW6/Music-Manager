@@ -4,12 +4,26 @@ A CLI to download your soundcloud playlists, without going through the troubles 
 ## Installation
 1. Download Source Code and navigate to directory
 2. Ensure python is installed
-3. run `python -m venv .venv`
-4. run `source ./.venv/bin/activate` (for linux, or activate venv however you would on your os)
-5. run `./music_mover`
+3. If downloading from youtube, ensure firefox is installed
+4. run `python -m venv .venv`
+5. run `source ./.venv/bin/activate` (for linux, or activate venv however you would on your os)
+6. run `./music_mover`
 
-## Usage
-Once you have entered your soundcloud username url once, you never have to paste another link. Just ensure playlists are public and select the one you want to download to your directory
+
+### Youtube Usage
+Since youtube is more difficult to scrape than soundcloud, the current system requires a bit of manual work.
+Current steps:
+1. Run the script
+2. Enter youtube account URL
+3. If firefox opens and prompts you for cookies, click reject all
+4. Choose your playlist to download (newest is first, displaying the names feauture coming soon)
+   
+### Soundcloud Usage
+Soundcloud is much simpler
+Current steps:
+1. Run the script
+2. Enter soundcloud account URL
+3. Choose playlist to download
 
 ## Disclaimer
 This script uses a web scraper well below a rate that would be flagged, but use at your own risk
