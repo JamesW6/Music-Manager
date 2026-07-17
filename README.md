@@ -11,16 +11,16 @@ A CLI to download your soundcloud playlists, without going through the troubles 
 
 
 ## Youtube Usage
-Since youtube is more difficult to scrape than soundcloud, the current system requires a bit of manual work.
-Current steps:
+Since youtube is more difficult to scrape than soundcloud, the current system requires a bit of manual work.  
+**Current steps**:
 1. Run the script
 2. Enter youtube account URL
 3. If firefox opens and prompts you for cookies, click reject all
 4. Choose your playlist to download (newest is first, displaying the names feauture coming soon)
    
 ## Soundcloud Usage
-Soundcloud is much simpler
-Current steps:
+Soundcloud is much simpler  
+**Current steps**:
 1. Run the script
 2. Enter soundcloud account URL
 3. Choose playlist to download
