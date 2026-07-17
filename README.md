@@ -26,4 +26,4 @@ Current steps:
 3. Choose playlist to download
 
 ## Disclaimer
-This script uses a web scraper well below a rate that would be flagged, but use at your own risk
+This script uses a web scraper, use at your own risk, especially with youtube
