@@ -26,7 +26,7 @@ Soundcloud is much simpler
 3. Choose playlist to download
 
 ## Tips 
-* You can write an alias to this script by executing `alias music_mover=/PATH/TO/DIRECTORY/music_mover`
+* You can write an alias to this script by executing `alias music_mover=/PATH/TO/DIRECTORY/music_mover` this will save you the time of cding into the directory everytime you want to run it
 
 ## Disclaimer
 This script uses a web scraper, use at your own risk, especially with youtube
