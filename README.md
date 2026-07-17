@@ -1,5 +1,5 @@
 # Music Manager
-A CLI to download your soundcloud playlists, without going through the troubles of configuring your yt-dlp command and finding your soundcloud playlist link
+A CLI to download your youtube or soundcloud playlists, without going through the troubles of configuring your yt-dlp command and finding your soundcloud playlist link
 
 ## Installation
 1. Download Source Code and navigate to directory
