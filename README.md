@@ -25,5 +25,8 @@ Soundcloud is much simpler
 2. Enter soundcloud account URL
 3. Choose playlist to download
 
+## Tips 
+* You can write an alias to this script by executing `alias music_mover=/PATH/TO/DIRECTORY/music_mover`
+
 ## Disclaimer
 This script uses a web scraper, use at your own risk, especially with youtube
