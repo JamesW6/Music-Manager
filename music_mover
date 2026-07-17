@@ -1,31 +1,54 @@
 #!/usr/bin/env bash
 
-web_scrape(){
-  python -c 'from sys import argv; from web_scraper import scrape; scrape(argv[1], argv[2])' "$@"
+scrape_soundcloud(){
+  python sc_scrape.py $1
+}
+scrape_youtube(){
+  python yt_scrape.py $1
 }
 update_directory(){
   echo "enter the name of the directory you want to store your music"
   read -r -e directory
   touch "$config"
+  sed -i '/directory/d' $config
   echo "directory: $directory" >> "$config"
 }
 update_account(){
-  echo "enter your soundcloud account url"
+  echo "enter your $1 account url"
   read -r account_url
-  echo "account: $account_url" >> "$config"
+  echo "$1: $account_url" >> "$config"
 }
+
 config="$HOME/.config/music_mover.txt"
-if ! [ -f "$config" ] || ! grep "directory" $config ; then
+echo "Change download directory? (y/n)"
+read -r change
+if ! [ -f "$config" ] || ! grep "directory" $config || [[ $change == "y" ]]; then
   update_directory
 fi
 
-if ! grep "account" "$config"; then
-  update_account
-fi
-url=$(grep "account" "$config" | sed 's/account: //')
-export param="$url"
 pip install -r requirements.txt
-playlists=$(web_scrape "$url" "$config")
+platform=""
+while  [[ "$platform" != "s" ]] && [[ "$platform" != "y" ]]; do
+  echo "downloading from (y)outube or (s)oundcloud?"
+  read -r platform
+done
+if [[ "$platform" == "s" ]]; then 
+  platform="soundcloud"
+else 
+  platform="youtube"
+fi
+if ! grep $platform "$config"; then
+  update_account "$platform"
+fi
+
+url=$(grep $platform "$config" | sed "s/$platform: //")
+
+if  [[ $platform == "soundcloud" ]];then
+  playlists=$(scrape_soundcloud "$url")
+else
+  playlists=$(scrape_youtube "$url")
+fi
+
 
 declare -a playlists_array
 read -r -a playlists_array <<< "$playlists"
@@ -44,16 +67,15 @@ for playlist in "${playlists_array[@]}"; do
   ((i++))
 done
 
-while true; do
-  echo "which playlist would you like to download: "
-  read -r input
-  input=$(($input-1))
-  download_directory=$(grep "directory" "$config" | sed 's/directory: //')
-  download_directory+="/"
-  download_directory+=${playlists_name_array[$input]}
-  mkdir $download_directory
-  echo ${playlists_link_array[@]}
-  yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -P "$download_directory" "${playlists_link_array[$input]}" 
-done
+echo "which playlist would you like to download: "
+read -r input
+input=$(($input-1))
+download_directory=$(grep "directory" "$config" | sed 's/directory: //')
+download_directory+="/"
+download_directory+=${playlists_name_array[$input]}
+echo $download_directory
+mkdir $download_directory
+echo ${playlists_link_array[@]}
+yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" -P "$download_directory" -x --audio-format mp3 "${playlists_link_array[$input]}" 
 
 
